@@ -1,0 +1,36 @@
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        
+        int left = 0;
+        int right = nums.length-1;
+        
+        //先排除target不在nums里的情况
+        if (target < nums[left]) {
+            return 0; 
+        }
+        if (target > nums[right]) {
+            return right+1;
+        }
+        
+        while (left<=right){
+            int mid = left + (right-left)/2;
+            if (nums[mid] == target) {
+                //target在nums的话找到就直接return
+                return mid;
+            }
+            else if (nums[mid]<target) {
+                left = mid+1;
+            }
+            else {
+                right = mid-1;
+            }
+        }
+        //如果不在nums里最后指针会变成[...s s s b b b...]
+        //                                   r l
+        //因此需要插入在right+1的位置
+        return right +1;
+    }
+}
